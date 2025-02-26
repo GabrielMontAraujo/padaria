@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Padaria da Memel</title>
+  <!-- Importando a fonte Pacifico para o logo -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    /* Global */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-color: #f8f8f8;
+      color: #333;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Header - estilizado e fixo */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 20px 40px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+    }
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      font-family: 'Pacifico', cursive;
+      color: #d35400;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    nav ul li {
+      margin-left: 20px;
+    }
+    nav ul li a {
+      font-size: 16px;
+      color: #333;
+      padding: 8px 12px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    nav ul li a:hover {
+      background-color: #d35400;
+      color: #fff;
+      border-radius: 4px;
+    }
+
+    /* Banner Slider */
+    /* Ajusta o margin-top para compensar o header fixo */
+    #banner {
+      margin-top: 80px;
+      position: relative;
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+    }
+    #banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    #banner img.active {
+      opacity: 1;
+    }
+
+    /* Seções */
+    section {
+      padding: 40px 20px;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    /* Produtos (Destaques & Promoções) */
+    .produtos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .produto-card {
+      background-color: #fff;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .produto-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .produto-card h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .produto-card p {
+      font-size: 16px;
+      color: #666;
+    }
+    .produto-card button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #d35400;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    /* Categorias de Produtos */
+    .categorias-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+    }
+    .categoria-card {
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .categoria-card img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+    .categoria-card h4 {
+      font-size: 16px;
+    }
+
+    /* Sobre a Padaria */
+    #sobre {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    #sobre p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    /* Galeria / Tour Virtual */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .gallery img {
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    footer .footer-links {
+      margin-bottom: 10px;
+    }
+    footer .footer-links a {
+      color: #fff;
+      margin: 0 10px;
+      font-size: 14px;
+    }
+    footer .newsletter input[type="email"] {
+      padding: 8px;
+      border: none;
+      border-radius: 3px;
+    }
+    footer .newsletter button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 3px;
+      background-color: #d35400;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+      }
+      nav ul {
+        flex-direction: column;
+        margin-top: 10px;
+      }
+      nav ul li {
+        margin-left: 0;
+        margin-bottom: 10px;
+      }
+      #banner {
+        margin-top: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">Padaria da Memel</div>
+    <nav>
+      <ul>
+        <li><a href="#inicio">Início</a></li>
+        <li><a href="#produtos">Produtos</a></li>
+        <li><a href="#promocoes">Promoções</a></li>
+        <li><a href="#sobre">Nossa História</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Banner Slider -->
+  <section id="banner">
+    <img src="./images/Designer.jpeg" alt="Banner 1" class="active" />
+    <img src="./images/Designer2.jpeg" alt="Banner 2" />
+    <img src="./images/Designer3.jpeg" alt="Banner 3" />
+  </section>
+
+  <!-- Destaques e Promoções -->
+  <section id="produtos">
+    <h2 class="section-title">Destaques &amp; Promoções</h2>
+    <div class="produtos-grid">
+      <div class="produto-card">
+        <img src="./images/pao_artesanal.jpeg" alt="Pão Artesanal" />
+        <h3>Pão Artesanal</h3>
+        <p>Delicioso pão feito com ingredientes naturais.</p>
+        <button>Confira Agora</button>
+      </div>
+      <div class="produto-card">
+        <img src="./images/bolo.jpeg" alt="Bolo de Festa" />
+        <h3>Bolo de Festa</h3>
+        <p>Bolo especial para todas as ocasiões.</p>
+        <button>Confira Agora</button>
+      </div>
+      <div class="produto-card">
+        <img src="./images/doce.jpeg" alt="Doce Caseiro" />
+        <h3>Doce Caseiro</h3>
+        <p>Uma receita tradicional da nossa família.</p>
+        <button>Confira Agora</button>
+      </div>
+      <div class="produto-card">
+        <img src="./images/salgado.jpeg" alt="Salgado Especial" />
+        <h3>Salgado Especial</h3>
+        <p>Perfeito para acompanhar seu café.</p>
+        <button>Confira Agora</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categorias de Produtos -->
+  <section id="categorias">
+    <h2 class="section-title">Categorias</h2>
+    <div class="categorias-grid">
+      <div class="categoria-card">
+        <img src="./images/pães.jpeg" alt="Pães Artesanais" />
+        <h4>Pães Artesanais</h4>
+      </div>
+      <div class="categoria-card">
+        <img src="./images/bolos2.jpeg" alt="Bolos &amp; Doces" />
+        <h4>Bolos &amp; Doces</h4>
+      </div>
+      <div class="categoria-card">
+        <img src="./images/salgados.jpeg" alt="Salgados" />
+        <h4>Salgados</h4>
+      </div>
+      <div class="categoria-card">
+        <img src="./images/especiais.jpeg" alt="Produtos Especiais" />
+        <h4>Produtos Especiais</h4>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sobre a Padaria -->
+  <section id="sobre">
+    <h2 class="section-title">Nossa História</h2>
+    <p>
+      Bem-vindo à Padaria da Memel, onde tradição e qualidade se encontram. Nossa padaria é reconhecida pela excelência em produtos artesanais, com receitas que passam de geração em geração.
+    </p>
+    <p>
+      Utilizamos apenas ingredientes selecionados para proporcionar uma experiência única a cada cliente. Venha conhecer nosso espaço e se deliciar com nossos produtos!
+    </p>
+  </section>
+
+  <!-- Galeria / Tour Virtual -->
+  <section id="galeria">
+    <h2 class="section-title">Visite-nos Virtualmente</h2>
+    <div class="gallery">
+      <img src="https://via.placeholder.com/200x150?text=Loja+1" alt="Loja 1" />
+      <img src="https://via.placeholder.com/200x150?text=Loja+2" alt="Loja 2" />
+      <img src="https://via.placeholder.com/200x150?text=Loja+3" alt="Loja 3" />
+      <img src="https://via.placeholder.com/200x150?text=Bastidores" alt="Bastidores" />
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contato">
+    <div class="footer-links">
+      <a href="#inicio">Início</a>
+      <a href="#produtos">Produtos</a>
+      <a href="#promocoes">Promoções</a>
+      <a href="#sobre">Nossa História</a>
+      <a href="#contato">Contato</a>
+    </div>
+    <p>Endereço: Rua das Delícias, 123 - Bairro Sabor, Cidade</p>
+    <p>Telefone: (11) 1234-5678 | Email: contato@padariadamemel.com</p>
+    <div class="newsletter">
+      <form action="#" method="post">
+        <input type="email" placeholder="Seu email" required />
+        <button type="submit">Inscrever</button>
+      </form>
+    </div>
+    <p>&copy; 2025 Padaria da Memel. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    // Funcionalidade simples para o slider do banner
+    const slides = document.querySelectorAll("#banner img");
+    let currentSlide = 0;
+    const slideInterval = setInterval(nextSlide, 5000);
+
+    function nextSlide() {
+      slides[currentSlide].classList.remove("active");
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add("active");
+    }
+  </script>
+</body>
+</html>
